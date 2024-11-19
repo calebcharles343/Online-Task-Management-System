@@ -1,15 +1,17 @@
 // import { useEffect, useState } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { DataType } from "../Interfaces";
 // import { useFormData } from "../context/FormDataContext";
 import styled from "styled-components";
-import Task from "./Task";
+import Task from "./Project";
 import Button from "./Button";
 import { dataJS } from "../data/dataJS";
 import { useNavigate } from "react-router-dom";
 import media from "../styles/MediaQuery";
+import { getProjects } from "../utils/api";
+import { useProjectStore } from "../store/useStore";
 
-const TasksContainer = styled.div`
+const ProjectsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +19,7 @@ const TasksContainer = styled.div`
   padding-top: 4rem;
 `;
 
-const StyledTasks = styled.ul`
+const StyledProjects = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, minmax(35rem, 1fr));
   width: 111rem;
@@ -42,20 +44,26 @@ const StyledTasks = styled.ul`
   }
 `;
 
-function Tasks() {
+function Projects() {
   // const [data, setData] = useState<DataType[]>([]);
+  const { setProjects, projects } = useProjectStore((state) => state);
   const [seeMore, setSeeMore] = useState<boolean>(false);
   // const { formData, updateField, handleSubmit } = useFormData();
 
   const navigate = useNavigate();
-  /*
-useEffect(() => {
-  fetch("/src/data/data.json")
-  .then((response) => response.json())
-  .then((data) => setData(data))
-  .catch((error) => console.error("Error fetching data:", error));
-}, []);
-*/
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const projects = await getProjects();
+
+      if (projects) {
+        setProjects(projects.data);
+      }
+    };
+    fetchProjects();
+  }, []);
+
+  // console.log("xxx", projects);
 
   // let filteredData = data ? data : dataJS;
 
@@ -63,27 +71,27 @@ useEffect(() => {
     setSeeMore(!seeMore);
   }
 
-  const handleClick = (id: number) => {
-    navigate(`/detail/${id}`);
-  };
+  // const handleClick = (id: number) => {
+  //   navigate(`/detail/${id}`);
+  // };
 
   return (
-    <TasksContainer>
-      <StyledTasks>
-        {dataJS.map((task) => (
-          <li key={task.id} onClick={() => handleClick(task.id)}>
-            <Task task={task} />
+    <ProjectsContainer>
+      <StyledProjects>
+        {projects.map((project) => (
+          <li key={project.id}>
+            <Task project={project} />
           </li>
         ))}
-      </StyledTasks>
+      </StyledProjects>
 
       {dataJS.length > 11 ? (
         <Button ButtonType="btn1" onClick={handleSeeMoreBtn}>
-          {dataJS.length > 12 ? "Load less" : "Load more"}
+          {projects.length > 12 ? "Load less" : "Load more"}
         </Button>
       ) : null}
-    </TasksContainer>
+    </ProjectsContainer>
   );
 }
 
-export default Tasks;
+export default Projects;

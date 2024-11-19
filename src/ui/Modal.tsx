@@ -9,6 +9,8 @@ import { useOutsideClick } from "../hooks/useOutsideClick";
 import { ModalContextProps } from "../Interfaces";
 
 const StyledModal = styled.div`
+  width: 100rem;
+  max-height: 70rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -16,8 +18,9 @@ const StyledModal = styled.div`
   background-color: var(--bg-color-2);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
-  /* padding: 3.2rem 4rem; */
+  padding: 8rem;
   transition: all 0.5s;
+  overflow-y: scroll;
 `;
 
 const Overlay = styled.div`

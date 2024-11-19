@@ -8,7 +8,14 @@ export interface StyledContainerProps {
 }
 
 export interface Buttons {
-  ButtonType: "btn1" | "btn2" | "mobile" | "mobile-2" | "long";
+  ButtonType:
+    | "btn1"
+    | "btn2"
+    | "mobile"
+    | "mobile-2"
+    | "long"
+    | "btn2project"
+    | "delete";
 }
 
 export interface CheckboxProps {
@@ -32,8 +39,8 @@ export interface InputProps {
   height?: string;
 }
 
-export interface TaskProps {
-  task: DataType;
+export interface ProjectProps {
+  project: DataType;
 }
 
 export interface IconProps {
@@ -73,7 +80,7 @@ export interface CircleProps {
 
 export interface DataType {
   id: number;
-  name: string;
+  title: string;
   description: string;
-  tasks: string[];
+  // tasks: string[];
 }

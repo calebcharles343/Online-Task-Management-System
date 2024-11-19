@@ -1,7 +1,15 @@
-import Jobs from "../ui/Tasks";
+import AddProjectForm from "../features/AddProjectForm";
+import AddProjectModal from "../ui/AddProjecForm";
+import Tasks from "../ui/Projects";
 
 function Home() {
-  return <Jobs />;
+  return (
+    <>
+      {/* <AddProjectForm /> */}
+      <AddProjectModal />
+      <Tasks />;
+    </>
+  );
 }
 
 export default Home;

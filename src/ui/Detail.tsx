@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import { dataJS } from "../data/dataJS";
 import styled from "styled-components";
 import Heading from "../ui/Heading";
 import media from "../styles/MediaQuery";
+import { useProjectStore } from "../store/useStore";
 
 const StyledDetail = styled.div`
   display: flex;
@@ -111,9 +111,19 @@ const JobRole = styled.div`
 
 function Detail() {
   const { id } = useParams<{ id: string }>();
+  const { projects } = useProjectStore((state) => state);
 
-  const job = dataJS.filter((job) => job.id === Number(id));
-  console.log(job);
+  // console.log("xxx", projects[0].id, id);
+
+  const project = projects.filter((project) => {
+    if (typeof id === "number") {
+      return project.id === id;
+    } else if (typeof id === "string") {
+      return project.id?.toString() === id; // Convert project.id to string for comparison (optional chaining handles missing ID)
+    }
+    return false; // Or return some default value if missing ID is allowed
+  });
+  console.log("project", project);
 
   return (
     <>
@@ -122,24 +132,24 @@ function Detail() {
           <DetailHeader>
             <DetailTextHeader>
               <Heading headingType="h1-mobile" color="--header-color">
-                {job[0].name}
+                {project[0].title}
               </Heading>
             </DetailTextHeader>
           </DetailHeader>
           <DetailTextContainer>
             <JobDescription>
-              <p>{job[0].description}</p>
+              <p>{project[0].description}</p>
             </JobDescription>
             <JobRole>
               <Heading headingType="h3" color="--header-color">
                 Task
               </Heading>
 
-              <ol>
+              {/* <ol>
                 {job[0].tasks.map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
-              </ol>
+              </ol> */}
             </JobRole>
           </DetailTextContainer>
         </DetailContainter>
@@ -149,3 +159,13 @@ function Detail() {
 }
 
 export default Detail;
+
+/*
+  const storedProjects = localStorage.getItem("project-storage");
+ const localStorageProjects = storedProjects
+ ? JSON.parse(storedProjects)
+ : null;
+ 
+ // console.log("project-storage", localStorageProjects.state.projects);
+ 
+ */

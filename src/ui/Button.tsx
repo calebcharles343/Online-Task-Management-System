@@ -49,6 +49,40 @@ const Button = styled.button<Buttons>`
         min-width: 8rem;
       }
     `}
+  ${({ ButtonType }) =>
+    ButtonType === "btn2project" &&
+    css`
+      background-color: var(--btn2-bg-color);
+      color: var(--btn2-font-color);
+
+      width: 4rem;
+      &:hover {
+        background-color: var(--btn2-bg-hover-color);
+      }
+
+      /* ${media.tablet} {
+        font-size: 1.6rem;
+        padding: 1rem 1.5rem;
+        min-width: 8rem;
+      } */
+    `}
+  ${({ ButtonType }) =>
+    ButtonType === "delete" &&
+    css`
+      background-color: red;
+      color: #fff;
+      width: 4rem;
+
+      &:hover {
+        background-color: #f88380;
+      }
+
+      /* ${media.tablet} {
+        font-size: 1.6rem;
+        padding: 1rem 1.5rem;
+        min-width: 8rem;
+      } */
+    `}
 
   ${({ ButtonType }) =>
     ButtonType === "mobile" &&
