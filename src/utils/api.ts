@@ -24,6 +24,7 @@ export const createProject = async (
     window.location.reload();
     return response.data;
   } catch (err) {
+    alert("Error creating Project");
     console.error("Error creating project:", err);
     throw err; // Re-throw the error to handle it in the calling function
   }
@@ -50,10 +51,10 @@ export const updateProject = async (
 export const deleteProject = async (id: number) => {
   try {
     const response = await axios.delete(`${API_URL}/projects/${id}`);
-    alert("Project deleteted successfully");
     window.location.reload();
     return response.data;
   } catch (err) {
+    alert("Error deleting Project");
     console.log(err);
   }
 };
@@ -89,10 +90,11 @@ export const deleteTask = async (id: string, projectId: string) => {
     const response = await axios.delete(
       `${API_URL}/projects/${projectId}/tasks/${id}`
     );
-    alert("task deleteted successfully");
+
     window.location.reload();
     return response.data;
   } catch (err) {
+    alert("Error deleting task");
     console.log(err);
   }
 };

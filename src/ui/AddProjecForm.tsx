@@ -4,6 +4,7 @@ import { Form } from "react-router-dom";
 import Button from "./Button";
 import { useEffect, useState } from "react";
 import { createProject } from "../utils/api";
+import media from "../styles/MediaQuery";
 
 const StyledAddProjectForm = styled.div``;
 
@@ -31,6 +32,13 @@ const FormRow = styled.div`
 
   textarea {
     height: 20rem;
+  }
+
+  ${media.mobile} {
+    grid-template-columns: 1fr;
+    label {
+      margin-bottom: 1rem;
+    }
   }
 `;
 

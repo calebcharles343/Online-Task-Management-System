@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import Heading from "./Heading";
 import ToggleSwitch from "./ToggleSwitch";
-// import SearchBar from "./SearchBar";
+
 import headerBg from "../data/img/header-bg.png";
 import headerBgMobile from "../data/img/Triangle.png";
-// import { useParams } from "react-router-dom";
-// import DetailBar from "./DetailBar";
+
 import media from "../styles/MediaQuery";
 
 const StyledHeader = styled.header`
@@ -18,11 +17,12 @@ const StyledHeader = styled.header`
   background-image: url(${headerBg});
   background-repeat: no-repeat;
   background-size: cover;
-  /* padding: 0 16.5rem 5.3rem 16.5rem; */
+
   padding: 2rem 16.5rem;
+  margin-bottom: 2rem;
 
   ${media.tablet} {
-    padding: 0 3.5rem 5.3rem 3.5rem;
+    padding: 0 2rem 5.3rem 2rem;
   }
   ${media.mobile} {
     background-image: url(${headerBgMobile});
@@ -45,7 +45,7 @@ function Header() {
   return (
     <StyledHeader>
       <Heading headingType="h1" color="--white">
-        ONLINE TASK MANAGEMENT SYSTEM
+        TASK MANAGEMENT
       </Heading>
       <Theme>
         <svg

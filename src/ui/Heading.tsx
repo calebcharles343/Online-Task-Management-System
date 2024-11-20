@@ -15,6 +15,10 @@ const Heading = styled.h1<HeadingProps>`
     css`
       font-size: 2.8rem;
       line-height: 3.4rem;
+
+      ${media.mobile} {
+        font-size: 2rem;
+      }
     `};
 
   ${({ headingType }) =>
@@ -22,6 +26,10 @@ const Heading = styled.h1<HeadingProps>`
     css`
       font-size: 2.4rem;
       line-height: 2.9rem;
+
+      ${media.mobile} {
+        font-size: 2rem;
+      }
     `};
 
   ${({ headingType }) =>
@@ -44,7 +52,7 @@ const Heading = styled.h1<HeadingProps>`
       line-height: 3.4rem;
 
       ${media.mobile} {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
     `};
 `;

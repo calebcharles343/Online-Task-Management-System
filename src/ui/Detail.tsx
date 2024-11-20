@@ -15,6 +15,9 @@ const StyledDetail = styled.div`
   gap: 2rem;
   width: 73rem;
   margin-top: 7rem;
+  ${media.mobile} {
+    max-width: 100vw;
+  }
 `;
 
 const DetailContainter = styled.div`
@@ -22,14 +25,14 @@ const DetailContainter = styled.div`
   background-color: var(--bg-color-2);
   width: 53rem;
 
-  /* 
   ${media.tablet} {
     width: 68.9rem;
   }
 
   ${media.mobile} {
     max-width: 100vw;
-  } */
+    padding: 2rem;
+  }
 `;
 
 const DetailHeader = styled.div`
@@ -70,9 +73,13 @@ const DetailTextHeader = styled.div`
 
 const DetailTextContainer = styled.div`
   width: 100%;
-  font-size: 1.6rem;
+  font-size: 2rem;
   line-height: 2.6rem;
   color: var(--dark-grey);
+
+  ${media.mobile} {
+    font-size: 1.8rem;
+  }
 `;
 
 const JobDescription = styled.div`
@@ -114,13 +121,17 @@ const BtnContainer = styled.div`
   justify-content: center;
   gap: 4rem;
 `;
-
 const ListContainer = styled.ol`
+  /* List item styling */
   li {
     display: flex;
     align-items: center;
     gap: 1rem;
+    word-wrap: break-word; /* Ensures words break properly */
+    flex-wrap: wrap; /* Allows content to wrap if needed */
   }
+
+  /* Button styling */
   button {
     display: flex;
     align-items: center;
@@ -129,7 +140,20 @@ const ListContainer = styled.ol`
     height: 2rem;
     border: none;
   }
+
+  /* Mobile-specific styles */
+  ${media.mobile} {
+    li {
+      flex-wrap: wrap; /* Ensures text wraps on smaller screens */
+      align-items: flex-start; /* Adjust alignment to keep items aligned */
+    }
+
+    button {
+      flex-shrink: 0; /* Prevent button from shrinking */
+    }
+  }
 `;
+
 const TaskFormRow = styled.div`
   display: flex;
   align-items: center;
@@ -141,6 +165,10 @@ const TaskFormRow = styled.div`
     color: #333;
     width: 35rem;
     padding: 1rem;
+  }
+  ${media.mobile} {
+    flex-direction: column;
+    gap: 1rem;
   }
 `;
 
@@ -231,7 +259,7 @@ function Detail() {
               <p>{project[0].description}</p>
             </JobDescription>
             <JobRole>
-              <Heading headingType="h3" color="--header-color">
+              <Heading headingType="h2" color="--header-color">
                 Task
               </Heading>
 

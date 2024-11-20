@@ -5,7 +5,6 @@ import Tasks from "../ui/Projects";
 function Home() {
   return (
     <>
-      {/* <AddProjectForm /> */}
       <AddProjectModal />
       <Tasks />;
     </>

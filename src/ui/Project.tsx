@@ -1,36 +1,31 @@
 import styled from "styled-components";
 import { ProjectProps } from "../Interfaces";
 import Heading from "./Heading";
-import media from "../styles/MediaQuery";
+// import media from "../styles/MediaQuery";
 import Button from "./Button";
 import { deleteProject, updateProject } from "../utils/api";
 import { Form, useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import { useState } from "react";
+import media from "../styles/MediaQuery";
 
 const StyledProject = styled.div`
-  position: relative;
   width: 35rem;
-  /* height: 22.8rem; */
   background-color: var(--job-bg-color);
-  /* margin-top: 2.5rem; */
-  padding: 0.1rem 3.2rem 3.2rem 3.2rem;
-  /* 
-  ${media.tablet} {
-    width: 32.9rem;
-  } */
+  padding: 3.2rem 3.2rem 3.2rem;
 `;
 
 const ProjectTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 4.9rem;
-  min-height: 14.7rem;
+  margin-bottom: 2rem;
+  height: 14.7rem;
   color: white;
   font-weight: 400;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   gap: 0.5rem;
+  overflow-y: hidden;
 
   p {
     color: var(--dark-grey);
@@ -72,6 +67,13 @@ const FormRow = styled.div`
   textarea {
     height: 20rem;
   }
+
+  ${media.mobile} {
+    grid-template-columns: 1fr;
+    label {
+      margin-bottom: 1rem;
+    }
+  }
 `;
 
 const MobileInputContainer = styled.div`
@@ -85,7 +87,6 @@ const BtnContainer = styled.div`
   justify-content: end;
   gap: 2rem;
 `;
-
 function Project({ project }: ProjectProps) {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -97,6 +98,7 @@ function Project({ project }: ProjectProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     const formData = {
       title,
       description,
@@ -104,12 +106,27 @@ function Project({ project }: ProjectProps) {
 
     updateProject(project.id, formData.title, formData.description);
     console.log("Form Data Submitted:", formData);
+    alert("Form submitted successfully!");
+  };
+
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const value = e.target.value;
+
+    if (value.length > 1) {
+      e.target.setCustomValidity("Description must be 1 character or less.");
+    } else {
+      e.target.setCustomValidity(""); // Clear custom validation message
+    }
+
+    setDescription(value);
   };
 
   return (
     <StyledProject>
       <ProjectTextContainer onClick={() => handleClick(project.id)}>
-        <Heading headingType="h3" color="--header-color">
+        <Heading headingType="h1" color="--header-color">
           {project.title}
         </Heading>
 
@@ -143,16 +160,17 @@ function Project({ project }: ProjectProps) {
                     <textarea
                       id="description"
                       value={description}
-                      onChange={(e) => setDescription(e.target.value)}
+                      onChange={handleDescriptionChange}
                       placeholder="Project Description"
+                      maxLength={1}
                       required
                     />
                   </FormRow>
                 </MobileInputContainer>
+                <Button ButtonType="btn1" type="submit">
+                  Update
+                </Button>
               </FormContainer>
-              <Button ButtonType="btn1" type="submit">
-                Submit
-              </Button>
             </Form>
           </Modal.Window>
         </Modal>

@@ -7,6 +7,7 @@ import { createPortal } from "react-dom";
 import styled from "styled-components";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import { ModalContextProps } from "../Interfaces";
+import media from "../styles/MediaQuery";
 
 const StyledModal = styled.div`
   width: 100rem;
@@ -20,7 +21,36 @@ const StyledModal = styled.div`
   box-shadow: var(--shadow-lg);
   padding: 8rem;
   transition: all 0.5s;
-  overflow-y: scroll;
+
+  ${media.mobile} {
+    width: 36rem;
+  }
+  /* overflow-y: scroll; */
+
+  /* WebKit browsers (Chrome, Edge, Safari) */
+  ::-webkit-scrollbar {
+    width: 2px; /* Keep the scrollbar narrow */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg-color-2); /* Match the modal's background color */
+    border-radius: var(--border-radius-lg);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(
+      --accent-color
+    ); /* Use a custom color for the scrollbar thumb */
+    border-radius: var(--border-radius-sm);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color-dark); /* Slightly darker color on hover */
+  }
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-color) var(--bg-color-2);
 `;
 
 const Overlay = styled.div`
