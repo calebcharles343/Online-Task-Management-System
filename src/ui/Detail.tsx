@@ -169,6 +169,20 @@ function Detail() {
     return false; // Or return some default value if missing ID is allowed
   });
 
+  const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+
+  const createTasksWithDelay = async (
+    tasks: string[],
+    id: any,
+    projectId: any
+  ) => {
+    for (const task of tasks) {
+      createTasks(id, projectId, task);
+      await delay(300); // 0.3s delay
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const formData = {
@@ -177,7 +191,7 @@ function Detail() {
 
     if (tasks) {
       tasks.forEach((task) => {
-        createTasks(id as any, project[0].id as any, task);
+        createTasksWithDelay(tasks, id, project[0].id);
       });
 
       const alertText =

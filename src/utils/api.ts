@@ -78,6 +78,7 @@ export const createTasks = async (
       project_id: projectId,
       task_name: taskName,
     });
+    window.location.reload();
     return response.data;
   } catch (err) {
     console.log(err);
