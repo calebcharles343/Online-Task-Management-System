@@ -114,10 +114,10 @@ function Project({ project }: ProjectProps) {
   ) => {
     const value = e.target.value;
 
-    if (value.length > 1) {
-      e.target.setCustomValidity("Description must be 1 character or less.");
+    if (value.length > 200) {
+      e.target.setCustomValidity("Description must be 200 character or less.");
     } else {
-      e.target.setCustomValidity(""); // Clear custom validation message
+      e.target.setCustomValidity("");
     }
 
     setDescription(value);
@@ -162,7 +162,6 @@ function Project({ project }: ProjectProps) {
                       value={description}
                       onChange={handleDescriptionChange}
                       placeholder="Project Description"
-                      maxLength={1}
                       required
                     />
                   </FormRow>
