@@ -1,12 +1,9 @@
-// import { useEffect, useState } from "react";
 import { useEffect, useState } from "react";
-// import { DataType } from "../Interfaces";
-// import { useFormData } from "../context/FormDataContext";
+
 import styled from "styled-components";
 import Task from "./Project";
 import Button from "./Button";
 import { dataJS } from "../data/dataJS";
-import { useNavigate } from "react-router-dom";
 import media from "../styles/MediaQuery";
 import { getProjects } from "../utils/api";
 import { useProjectStore } from "../store/useStore";
@@ -45,12 +42,8 @@ const StyledProjects = styled.ul`
 `;
 
 function Projects() {
-  // const [data, setData] = useState<DataType[]>([]);
   const { setProjects, projects } = useProjectStore((state) => state);
   const [seeMore, setSeeMore] = useState<boolean>(false);
-  // const { formData, updateField, handleSubmit } = useFormData();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -63,17 +56,9 @@ function Projects() {
     fetchProjects();
   }, []);
 
-  // console.log("xxx", projects);
-
-  // let filteredData = data ? data : dataJS;
-
   function handleSeeMoreBtn() {
     setSeeMore(!seeMore);
   }
-
-  // const handleClick = (id: number) => {
-  //   navigate(`/detail/${id}`);
-  // };
 
   return (
     <ProjectsContainer>

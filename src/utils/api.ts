@@ -57,3 +57,41 @@ export const deleteProject = async (id: number) => {
     console.log(err);
   }
 };
+
+////////////////////////////////////////////////////////////////
+
+export const getTasks = async (id: number) => {
+  try {
+    const response = await axios.get(`${API_URL}/projects/${id}/tasks/${id}`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const createTasks = async (
+  id: string,
+  projectId: string,
+  taskName: string
+) => {
+  try {
+    const response = await axios.post(`${API_URL}/projects/${id}/tasks`, {
+      project_id: projectId,
+      task_name: taskName,
+    });
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const deleteTask = async (id: string, projectId: string) => {
+  try {
+    const response = await axios.delete(
+      `${API_URL}/projects/${projectId}/tasks/${id}`
+    );
+    alert("task deleteted successfully");
+    window.location.reload();
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

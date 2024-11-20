@@ -34,20 +34,6 @@ const FormRow = styled.div`
   }
 `;
 
-const TaskFormRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  font-size: 3rem;
-
-  input {
-    color: #333;
-    width: 35rem;
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
-`;
-
 const MobileInputContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -57,28 +43,10 @@ const MobileInputContainer = styled.div`
 const AddProjectForm: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [tasks, setTasks] = useState<string[]>([""]);
 
   useEffect(() => {
-    console.log("Updated:", title, description, tasks);
-  }, [tasks, description, title]);
-
-  // Function to handle adding a new task input
-  const handleAddTask = () => {
-    setTasks([...tasks, ""]);
-  };
-
-  // Function to handle removing a task input by index
-  const handleRemoveTask = (index: number) => {
-    setTasks(tasks.filter((_, i) => i !== index));
-  };
-
-  // Function to handle input change
-  const handleInputChange = (value: string, index: number) => {
-    const updatedTasks = [...tasks];
-    updatedTasks[index] = value;
-    setTasks(updatedTasks);
-  };
+    console.log("Updated:", title, description);
+  }, [description, title]);
 
   // Handle form submission and log all form data
   const handleSubmit = (e: React.FormEvent) => {
@@ -86,7 +54,6 @@ const AddProjectForm: React.FC = () => {
     const formData = {
       title,
       description,
-      tasks,
     };
 
     createProject(formData.title, formData.description);
@@ -128,38 +95,6 @@ const AddProjectForm: React.FC = () => {
                       required
                     />
                   </FormRow>
-
-                  <div>
-                    {tasks.map((task, index) => (
-                      <TaskFormRow key={index}>
-                        <label htmlFor={`task-${index}`}>Task</label>
-                        <input
-                          type="text"
-                          id={`task-${index}`}
-                          value={task}
-                          onChange={(e) =>
-                            handleInputChange(e.target.value, index)
-                          }
-                          placeholder={`Task ${index + 1}`}
-                          required
-                        />
-                        <Button
-                          ButtonType="delete"
-                          type="button"
-                          onClick={() => handleRemoveTask(index)}
-                        >
-                          Remove
-                        </Button>
-                      </TaskFormRow>
-                    ))}
-                    <Button
-                      ButtonType="btn2"
-                      type="button"
-                      onClick={handleAddTask}
-                    >
-                      Add Task
-                    </Button>
-                  </div>
                 </MobileInputContainer>
                 <Button ButtonType="btn1" type="submit">
                   Submit
