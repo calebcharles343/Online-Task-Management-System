@@ -1,11 +1,10 @@
-import AddProjectForm from "../features/AddProjectForm";
-import AddProjectModal from "../ui/AddProjecForm";
+import AddProjectForm from "../ui/AddProjecForm";
 import Tasks from "../ui/Projects";
 
 function Home() {
   return (
     <>
-      <AddProjectModal />
+      <AddProjectForm />
       <Tasks />;
     </>
   );
