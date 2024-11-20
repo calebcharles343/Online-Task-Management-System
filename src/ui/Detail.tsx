@@ -114,6 +114,36 @@ const BtnContainer = styled.div`
   justify-content: center;
   gap: 4rem;
 `;
+
+const ListContainer = styled.ol`
+  li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border: none;
+  }
+`;
+const TaskFormRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  font-size: 2.6rem;
+  margin-bottom: 2rem;
+
+  input {
+    color: #333;
+    width: 35rem;
+    padding: 1rem;
+  }
+`;
+
 interface ProjectTask {
   _id: string;
   project_id: string;
@@ -122,38 +152,23 @@ interface ProjectTask {
   updated_at?: string;
 }
 
-const TaskFormRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  font-size: 3rem;
-
-  input {
-    color: #333;
-    width: 35rem;
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
-`;
 function Detail() {
   const { id } = useParams<{ id: string }>();
   const { projects } = useProjectStore((state) => state);
   const [projectTask, setProjectTask] = useState<ProjectTask[]>();
   const [tasks, setTasks] = useState<string[]>([""]);
 
-  // console.log("xxx", projects[0].id, id);
+  useEffect(() => {
+    setTasks([]);
+  }, []);
 
-  // Function to handle adding a new task input
   const handleAddTask = () => {
     setTasks([...tasks, ""]);
   };
 
-  // Function to handle removing a task input by index
   const handleRemoveTask = (index: number) => {
     setTasks(tasks.filter((_, i) => i !== index));
   };
-
-  // Function to handle input change
   const handleInputChange = (value: string, index: number) => {
     const updatedTasks = [...tasks];
     updatedTasks[index] = value;
@@ -169,20 +184,6 @@ function Detail() {
     return false; // Or return some default value if missing ID is allowed
   });
 
-  const delay = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
-  const createTasksWithDelay = async (
-    tasks: string[],
-    id: any,
-    projectId: any
-  ) => {
-    for (const task of tasks) {
-      createTasks(id, projectId, task);
-      await delay(300); // 0.3s delay
-    }
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const formData = {
@@ -191,7 +192,7 @@ function Detail() {
 
     if (tasks) {
       tasks.forEach((task) => {
-        createTasksWithDelay(tasks, id, project[0].id);
+        createTasks(id as any, project[0].id as any, task);
       });
 
       const alertText =
@@ -234,7 +235,7 @@ function Detail() {
                 Task
               </Heading>
 
-              <ol>
+              <ListContainer>
                 {projectTask?.map((task, index) => (
                   <li key={index}>
                     {task.task_name}{" "}
@@ -245,7 +246,7 @@ function Detail() {
                     </button>
                   </li>
                 ))}
-              </ol>
+              </ListContainer>
             </JobRole>
           </DetailTextContainer>
         </DetailContainter>
@@ -277,9 +278,11 @@ function Detail() {
               Add Task
             </Button>
 
-            <Button ButtonType="btn1" type="submit">
-              submit
-            </Button>
+            {tasks.length > 0 ? (
+              <Button ButtonType="btn1" type="submit">
+                submit
+              </Button>
+            ) : null}
           </BtnContainer>
         </Form>
       </StyledDetail>
