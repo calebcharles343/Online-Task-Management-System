@@ -5,7 +5,7 @@ function Home() {
   return (
     <>
       <AddProjectForm />
-      <Tasks />;
+      <Tasks />
     </>
   );
 }
