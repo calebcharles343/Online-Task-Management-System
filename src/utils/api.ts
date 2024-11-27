@@ -2,15 +2,6 @@ import axios from "axios";
 
 const API_URL = "https://task-management-kcyf.onrender.com/api";
 
-export const getProjects = async () => {
-  try {
-    const response = await axios.get(`${API_URL}/projects`);
-    return response.data;
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 export const createProject = async (
   titleName: string,
   descriptionDetails: string
@@ -27,6 +18,24 @@ export const createProject = async (
     alert("Error creating Project");
     console.error("Error creating project:", err);
     throw err; // Re-throw the error to handle it in the calling function
+  }
+};
+
+export const getProjects = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/projects`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getProject = async (projectId: string | undefined) => {
+  try {
+    const response = await axios.get(`${API_URL}/projects/${projectId}`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
 };
 

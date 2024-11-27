@@ -4,7 +4,7 @@ import Heading from "../ui/Heading";
 import media from "../styles/MediaQuery";
 import { useProjectStore } from "../store/useStore";
 import { useEffect, useState } from "react";
-import { createTasks, getTasks, deleteTask } from "../utils/api";
+import { createTasks, deleteTask } from "../utils/api";
 import Button from "./Button";
 
 const StyledDetail = styled.div`
@@ -172,23 +172,26 @@ const TaskFormRow = styled.div`
   }
 `;
 
-interface ProjectTask {
-  _id: string;
-  project_id: string;
-  task_name: string;
-  created_at: string;
-  updated_at?: string;
-}
-
 function Detail() {
   const { id } = useParams<{ id: string }>();
-  const { projects } = useProjectStore((state) => state);
-  const [projectTask, setProjectTask] = useState<ProjectTask[]>();
+  const { projects, project, setProject } = useProjectStore((state) => state);
   const [tasks, setTasks] = useState<string[]>([""]);
 
   useEffect(() => {
+    const filterdProject = projects.filter((project) => {
+      if (typeof id === "number") {
+        return project.id === id;
+      } else if (typeof id === "string") {
+        return project.id?.toString() === id;
+      }
+      return false;
+    });
+
+    setProject(filterdProject);
     setTasks([]);
   }, []);
+
+  console.log(project[0].tasks);
 
   const handleAddTask = () => {
     setTasks([...tasks, ""]);
@@ -202,15 +205,6 @@ function Detail() {
     updatedTasks[index] = value;
     setTasks(updatedTasks);
   };
-
-  const project = projects.filter((project) => {
-    if (typeof id === "number") {
-      return project.id === id;
-    } else if (typeof id === "string") {
-      return project.id?.toString() === id; // Convert project.id to string for comparison (optional chaining handles missing ID)
-    }
-    return false; // Or return some default value if missing ID is allowed
-  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -232,16 +226,6 @@ function Detail() {
 
     console.log("Form Data Submitted:", formData);
   };
-  useEffect(function () {
-    const fetchTasks = async () => {
-      const tasks = await getTasks(id as any);
-
-      if (tasks) {
-        setProjectTask(tasks.tasks);
-      }
-    };
-    fetchTasks();
-  }, []);
 
   return (
     <>
@@ -264,7 +248,7 @@ function Detail() {
               </Heading>
 
               <ListContainer>
-                {projectTask?.map((task, index) => (
+                {project[0].tasks.map((task, index) => (
                   <li key={index}>
                     {task.task_name}{" "}
                     <button

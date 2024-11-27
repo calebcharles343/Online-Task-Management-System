@@ -82,5 +82,13 @@ export interface DataType {
   id: number;
   title: string;
   description: string;
-  // tasks: string[];
+  tasks: Task[];
+}
+
+export interface Task {
+  _id: string;
+  task_name: string;
+  project_id: string;
+  created_at: string;
+  updated_at: string;
 }
