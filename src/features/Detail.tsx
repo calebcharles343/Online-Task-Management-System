@@ -1,4 +1,4 @@
-import { Form, useParams } from "react-router-dom";
+import { Form, useNavigate, useParams } from "react-router-dom";
 import Heading from "../ui/Heading";
 import { useProjectStore } from "../store/useStore";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -20,12 +20,17 @@ import {
 function Detail() {
   const { id } = useParams<{ id: string }>();
   const { projects, fetchProjects } = useProjectStore((state) => state);
-
   const [tasksList, setTasksList] = useState<string[]>([]);
+
+  const navigate = useNavigate();
 
   const componentProject = useMemo(() => {
     return projects.find((project) => (project.id as any) === id) || null;
   }, [projects, id]);
+
+  if (!componentProject) {
+    navigate(`/home`);
+  }
 
   const handleAddTaskInput = () => {
     setTasksList((prev) => [...prev, ""]);
