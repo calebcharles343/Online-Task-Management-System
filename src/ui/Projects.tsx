@@ -48,8 +48,6 @@ function Projects() {
     fetchProjects();
   }, []);
 
-  console.log(projects);
-
   function handleSeeMoreBtn() {
     setSeeMore(!seeMore);
   }

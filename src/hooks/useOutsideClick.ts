@@ -1,3 +1,5 @@
+// useOutsideClick.ts
+
 import { useEffect, useRef, RefObject } from "react";
 
 interface ClickProps {
@@ -13,7 +15,7 @@ export function useOutsideClick(
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        handler();
+        handler(); // Trigger the provided handler (e.g., close)
       }
     }
 

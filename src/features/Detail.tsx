@@ -27,8 +27,6 @@ function Detail() {
     return projects.find((project) => (project.id as any) === id) || null;
   }, [projects, id]);
 
-  console.log(componentProject);
-
   const handleAddTaskInput = () => {
     setTasksList((prev) => [...prev, ""]);
   };

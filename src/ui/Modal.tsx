@@ -10,6 +10,7 @@ import { ModalContextProps } from "../Interfaces";
 import media from "../styles/MediaQuery";
 
 const StyledModal = styled.div`
+  position: relative;
   width: 100rem;
   max-height: 70rem;
   position: fixed;
@@ -53,6 +54,13 @@ const StyledModal = styled.div`
   scrollbar-color: var(--accent-color) var(--bg-color-2);
 `;
 
+const ButtonModal = styled.div`
+  position: absolute;
+  color: red;
+  top: 5rem;
+  left: 90rem;
+  font-size: 2rem;
+`;
 const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -66,7 +74,9 @@ const Overlay = styled.div`
 `;
 
 // Context for managing modal state
-const ModalContext = createContext<ModalContextProps | undefined>(undefined);
+export const ModalContext = createContext<ModalContextProps | undefined>(
+  undefined
+);
 
 // Modal Provider
 function Modal({ children }: { children: ReactNode }) {
@@ -110,7 +120,7 @@ function Window({
   return createPortal(
     <Overlay>
       <StyledModal ref={ref}>
-        {/* <Button onClick={close}>Close</Button> */}
+        <ButtonModal onClick={close}>Close</ButtonModal>
         <div>{children}</div>
       </StyledModal>
     </Overlay>,
