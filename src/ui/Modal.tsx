@@ -60,6 +60,7 @@ const ButtonModal = styled.div`
   top: 5rem;
   left: 90rem;
   font-size: 2rem;
+  cursor: pointer;
 `;
 const Overlay = styled.div`
   position: fixed;
