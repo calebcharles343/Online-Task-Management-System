@@ -8,6 +8,7 @@ import { Form, useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import { useState } from "react";
 import media from "../styles/MediaQuery";
+import { useProjectStore } from "../store/useStore";
 
 const StyledProject = styled.div`
   width: 35rem;
@@ -88,6 +89,8 @@ const BtnContainer = styled.div`
   gap: 2rem;
 `;
 function Project({ project }: ProjectProps) {
+  const { fetchProjects } = useProjectStore((state) => state);
+
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const navigate = useNavigate();
@@ -121,6 +124,15 @@ function Project({ project }: ProjectProps) {
     }
 
     setDescription(value);
+  };
+
+  const handleDeleteProject = async (projectId: string) => {
+    try {
+      await deleteProject(projectId as any);
+      await fetchProjects();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -173,7 +185,10 @@ function Project({ project }: ProjectProps) {
             </Form>
           </Modal.Window>
         </Modal>
-        <Button ButtonType="delete" onClick={() => deleteProject(project.id)}>
+        <Button
+          ButtonType="delete"
+          onClick={() => handleDeleteProject(project?.id as any)}
+        >
           delete
         </Button>
       </BtnContainer>

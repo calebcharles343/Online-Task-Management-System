@@ -5,6 +5,7 @@ import Button from "./Button";
 import { useEffect, useState } from "react";
 import { createProject } from "../utils/api";
 import media from "../styles/MediaQuery";
+import { useProjectStore } from "../store/useStore";
 
 const StyledAddProjectForm = styled.div``;
 
@@ -51,6 +52,7 @@ const MobileInputContainer = styled.div`
 const AddProjectForm: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const { fetchProjects } = useProjectStore((state) => state);
 
   useEffect(() => {
     console.log("Updated:", title, description);
@@ -64,7 +66,7 @@ const AddProjectForm: React.FC = () => {
       description,
     };
 
-    createProject(formData.title, formData.description);
+    createProject(formData.title, formData.description, fetchProjects);
     console.log("Form Data Submitted:", formData);
   };
 

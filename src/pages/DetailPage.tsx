@@ -1,4 +1,4 @@
-import Detail from "../ui/Detail";
+import Detail from "../features/Detail";
 
 function DetailPage() {
   return <Detail />;

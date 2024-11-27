@@ -5,7 +5,6 @@ import Task from "./Project";
 import Button from "./Button";
 import { dataJS } from "../data/dataJS";
 import media from "../styles/MediaQuery";
-import { getProjects } from "../utils/api";
 import { useProjectStore } from "../store/useStore";
 
 const ProjectsContainer = styled.div`
@@ -42,19 +41,14 @@ const StyledProjects = styled.ul`
 `;
 
 function Projects() {
-  const { setProjects, projects } = useProjectStore((state) => state);
+  const { projects, fetchProjects } = useProjectStore((state) => state);
   const [seeMore, setSeeMore] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      const projects = await getProjects();
-
-      if (projects) {
-        setProjects(projects.data);
-      }
-    };
     fetchProjects();
   }, []);
+
+  console.log(projects);
 
   function handleSeeMoreBtn() {
     setSeeMore(!seeMore);

@@ -1,13 +1,13 @@
-// src/store/useStore.ts
 import { create, StateCreator } from "zustand";
-import { DataType } from "../Interfaces";
 import { persist, PersistOptions } from "zustand/middleware";
+import { getProjects, getProject } from "../utils/api";
+import { DataType } from "../Interfaces";
 
 interface Projects {
   projects: DataType[];
   project: DataType[];
-  setProjects: (data: DataType[]) => void;
-  setProject: (data: DataType[]) => void;
+  fetchProjects: () => Promise<void>;
+  fetchProject: (id: string) => Promise<void>;
 }
 
 type MyPersist = (
@@ -20,8 +20,14 @@ export const useProjectStore = create<Projects>(
     (set) => ({
       projects: [],
       project: [],
-      setProjects: (data) => set({ projects: data }),
-      setProject: (data) => set({ project: data }),
+      fetchProjects: async () => {
+        const response = await getProjects();
+        set({ projects: response.data });
+      },
+      fetchProject: async (id: string) => {
+        const response = await getProject(id);
+        set({ project: [response.data] });
+      },
     }),
     { name: "project-storage" }
   )

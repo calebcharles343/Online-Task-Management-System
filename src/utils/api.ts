@@ -4,20 +4,23 @@ const API_URL = "https://task-management-kcyf.onrender.com/api";
 
 export const createProject = async (
   titleName: string,
-  descriptionDetails: string
-): Promise<any> => {
+  descriptionDetails: string,
+  fetchProjects: () => void
+) => {
   try {
     const response = await axios.post(`${API_URL}/projects`, {
       title: titleName,
       description: descriptionDetails,
     });
     alert("Project created successfully");
-    window.location.reload();
-    return response.data;
+
+    const updatedProjects = await getProjects();
+
+    fetchProjects();
+    return { response, updatedProjects };
   } catch (err) {
     alert("Error creating Project");
     console.error("Error creating project:", err);
-    throw err; // Re-throw the error to handle it in the calling function
   }
 };
 
@@ -50,7 +53,7 @@ export const updateProject = async (
       description: descriptionDetails,
     });
     alert("Project updated successfully");
-    window.location.reload();
+
     return response.data;
   } catch (err) {
     console.log(err);
@@ -60,7 +63,6 @@ export const updateProject = async (
 export const deleteProject = async (id: number) => {
   try {
     const response = await axios.delete(`${API_URL}/projects/${id}`);
-    window.location.reload();
     return response.data;
   } catch (err) {
     alert("Error deleting Project");
@@ -88,7 +90,6 @@ export const createTasks = async (
       project_id: projectId,
       task_name: taskName,
     });
-    window.location.reload();
     return response.data;
   } catch (err) {
     console.log(err);
@@ -100,7 +101,6 @@ export const deleteTask = async (id: string, projectId: string) => {
       `${API_URL}/projects/${projectId}/tasks/${id}`
     );
 
-    window.location.reload();
     return response.data;
   } catch (err) {
     alert("Error deleting task");
