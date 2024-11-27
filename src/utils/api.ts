@@ -30,6 +30,7 @@ export const getProjects = async () => {
     return response.data;
   } catch (err) {
     console.log(err);
+    alert(`Error Fetching projects`);
   }
 };
 
@@ -63,6 +64,7 @@ export const updateProject = async (
 export const deleteProject = async (id: number) => {
   try {
     const response = await axios.delete(`${API_URL}/projects/${id}`);
+    alert(`Project deleted successfully`);
     return response.data;
   } catch (err) {
     alert("Error deleting Project");
