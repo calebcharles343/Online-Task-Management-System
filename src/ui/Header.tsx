@@ -26,6 +26,10 @@ const StyledHeader = styled.header`
   }
   ${media.mobile} {
     background-image: url(${headerBgMobile});
+
+    h1 {
+      font-size: 1.6rem;
+    }
   }
 `;
 
@@ -45,7 +49,7 @@ function Header() {
   return (
     <StyledHeader>
       <Heading headingType="h1" color="--white">
-        TASK MANAGEMENT
+        TASK MANAGEMENT BY Charles Caleb and Ashe Eric with ReactJS and NodeJs
       </Heading>
       <Theme>
         <svg
