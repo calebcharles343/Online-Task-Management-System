@@ -48,9 +48,16 @@ function Header() {
   // const { id } = useParams<{ id: string }>();
   return (
     <StyledHeader>
-      <Heading headingType="h1" color="--white">
-        TASK MANAGEMENT BY Charles Caleb and Ashe Eric with ReactJS and NodeJs
-      </Heading>
+      <div>
+        <Heading headingType="h1" color="--white">
+          TASK MANAGEMENT
+        </Heading>
+        <Heading headingType="h4" color="--white">
+          {" "}
+          BY Charles Caleb and Ashe Eric with ReactJS and NodeJs
+        </Heading>
+      </div>
+      \
       <Theme>
         <svg
           width="20"
@@ -84,7 +91,6 @@ function Header() {
           />
         </svg>
       </Theme>
-
       {/* {id ? <DetailBar /> : <SearchBar />} */}
     </StyledHeader>
   );
